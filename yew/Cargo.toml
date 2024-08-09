@@ -1,0 +1,25 @@
+[package]
+name = "marchrs_yew"
+version = "0.1.0"
+edition = "2021"
+description = "Web interface for marcher SDF rendering"
+readme = "README.md"
+license = "MIT"
+keywords = ["yew", "trunk"]
+categories = ["gui", "wasm", "web-programming"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+marchrs_iterators = { version = "0.1.0", path = "../iterators" }
+marchrs_rays = { version = "0.1.0", path = "../rays" }
+marchrs_sdf = { version = "0.1.0", path = "../sdf" }
+marchrs_vectors = { version = "0.1.0", path = "../vectors" }
+rayon = "1.10.0"
+yew = { version = "0.21", features = ["csr"] }
+wasm-bindgen = "0.2.92"
+web-sys = { version = "0.3.69", features = [
+  "HtmlCanvasElement",
+  "CanvasRenderingContext2d",
+  "Window",
+  "ImageData",
+] }

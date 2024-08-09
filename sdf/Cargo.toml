@@ -1,0 +1,8 @@
+[package]
+name = "marchrs_sdf"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+marchrs_vectors = { version = "0.1.0", path = "../vectors" }
+take_mut = "0.2.2"

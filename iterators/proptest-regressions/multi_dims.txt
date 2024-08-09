@@ -1,0 +1,8 @@
+# Seeds for failure cases proptest has generated in the past. It is
+# automatically read and these particular cases re-run before any
+# novel cases are generated.
+#
+# It is recommended to check this file in to source control so that
+# everyone who runs the test benefits from these saved cases.
+cc 1f60d4cf1be8098f7c669dca33062db21ed535a616e644525879aeba1ac4a4e1 # shrinks to (dims, (flat0, flat1)) = (MultiDims([519, 794, 356, 599, 10]), (794, 91600486504))
+cc 7662c8e08332d22755f0321917e2ea60a4b668bf6988aba458283b145285eb4a # shrinks to (dims, (flat0, flat1)) = (MultiDims([945, 793]), (5, 16060))
