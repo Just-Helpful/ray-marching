@@ -1,18 +1,6 @@
 [package]
 name = "marchrs"
 
-# Fast development reload with high dependency optimisation
-[profile.dev]
-opt-level = 1
-[profile.dev.package."*"]
-opt-level = 3
-
-[dependencies]
-marchrs_iterators = { version = "0.1.0", path = "iterators" }
-marchrs_rays = { version = "0.1.0", path = "rays" }
-marchrs_sdf = { version = "0.1.0", path = "sdf" }
-marchrs_vectors = { version = "0.1.0", path = "vectors" }
-
 [workspace]
 members = ["iterators", "vectors", "sdf", "rays", "yew"]
 resolver = "2"
@@ -27,9 +15,31 @@ authors = ["Alex Colby"]
 keywords = ["graphics"]
 categories = ["graphics", "mathematics", "rendering"]
 
-# homepage = "https://github.com/Mr-Helpful/diom"
-# repository = "https://github.com/Mr-Helpful/diom"
-# documentation = "https://github.com/Mr-Helpful/diom-docs"
+homepage = "https://github.com/Mr-Helpful/ray-marching"
+repository = "https://github.com/Mr-Helpful/ray-marching"
 
 license = "MIT"
 readme = "README.md"
+
+# Fast development reload with high dependency optimisation
+[profile.dev]
+opt-level = 1
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+lto = true
+debug = true # for flamegraph
+
+[target.x86_64-unknown-linux-gnu]
+linker = "/usr/bin/clang"
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-Clink-arg=-Wl,--no-rosegment"]
+
+[dependencies]
+marchrs_iterators = { version = "0.1.0", path = "iterators" }
+marchrs_rays = { version = "0.1.0", path = "rays" }
+marchrs_sdf = { version = "0.1.0", path = "sdf" }
+marchrs_vectors = { version = "0.1.0", path = "vectors" }
+
+[[example]]
+name = "basic"
