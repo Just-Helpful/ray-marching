@@ -50,7 +50,7 @@ renders for SDF objects, via a Yew web app.\
 This can be run with:
 
 ```bash
-trunk serve ./yew/index.html
+trunk serve ./yew/index.html --open
 ```
 
 [trunk](https://crates.io/crates/trunk)
