@@ -1,4 +1,6 @@
-use marchrs_rays::{PerspectiveCamera3D, RayMarcher, RaySource, ScreenInfo, SphereMarcher};
+use marchrs_rays::{
+  PerspectiveCamera3D, RayMarcher, RaySource, Renderer, Rgba, ScreenInfo, Solid, SphereMarcher,
+};
 use marchrs_sdf::traits::DynModel;
 use rayon::iter::IntoParallelIterator;
 use yew::prelude::*;
@@ -6,17 +8,13 @@ use yew::prelude::*;
 mod canvas_draw;
 use canvas_draw::use_canvas_draw;
 
-#[derive(Clone, Copy, PartialEq)]
-pub struct Rgba([u8; 4]);
-pub const BLACK: Rgba = Rgba([0, 0, 0, 255]);
-pub const FG: Rgba = Rgba([0, 154, 91, 255]);
-
 #[derive(Properties, PartialEq)]
 pub struct ScreenProps {
   pub marcher: SphereMarcher,
   pub source: PerspectiveCamera3D,
   pub screen: ScreenInfo<2>,
   pub model: DynModel<3, Rgba>,
+  pub renderer: Solid<Rgba>,
 }
 
 #[function_component]
@@ -26,6 +24,7 @@ pub fn Screen(props: &ScreenProps) -> Html {
     source,
     screen,
     model,
+    renderer,
   } = props;
 
   let canvas_ref = use_node_ref();
@@ -37,8 +36,10 @@ pub fn Screen(props: &ScreenProps) -> Html {
       source
         .rays(screen)
         .into_par_iter()
-        .map(|ray| marcher.call(model, ray))
-        .map(|res| res.unwrap_or(BLACK))
+        .map(|ray| {
+          let hit = marcher.march(model, ray);
+          renderer.render(model, hit)
+        })
         .collect()
     },
   );

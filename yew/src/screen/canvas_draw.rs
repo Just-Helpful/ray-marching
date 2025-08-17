@@ -30,6 +30,7 @@ pub fn use_canvas_draw(node: NodeRef, pixels: Rc<Vec<Rgba>>, dims: [usize; 2]) {
         .dyn_into::<CanvasRenderingContext2d>()
         .expect_throw("`get_context(\"2d\")` should give a 2d context");
 
+      let pixels: Vec<u8> = pixels.iter().map(|x| (x * 256.0).floor() as u8).collect();
       let pixels = Clamped(pixels.as_slice());
       let data = ImageData::new_with_u8_clamped_array_and_sh(pixels, *w, *h)
         .expect_throw("Should be able to construct ImageData");
