@@ -39,13 +39,15 @@ impl<const N: usize, T: SdfInfo<N>> SdfInfo<N> for Scale<N, T> {
   type Info = T::Info;
   #[inline]
   fn call_info(&self, pos: Vector<N>) -> (f64, Self::Info) {
-    self.0.call_info(pos * self.1)
+    let (dist, info) = self.0.call_info(pos * self.1);
+    (dist * self.2, info)
   }
 }
 
 impl<const N: usize, T: SdfGrad<N>> SdfGrad<N> for Scale<N, T> {
   #[inline]
   fn call_grad(&self, pos: Vector<N>) -> (f64, Vector<N>) {
-    self.0.call_grad(pos * self.1)
+    let (dist, grad) = self.0.call_grad(pos * self.1);
+    (dist * self.2, grad)
   }
 }
