@@ -36,7 +36,7 @@ pub trait SdfRotate3D: Sdf<3> + Sized {
 impl<T: Sdf<3>> SdfRotate3D for T {}
 
 #[derive(Clone, Copy, PartialEq)]
-pub struct Rotate3D<T>(T, [[f64; 3]; 3]);
+pub struct Rotate3D<T>(pub T, [[f64; 3]; 3]);
 
 impl<T: Default> Default for Rotate3D<T> {
   fn default() -> Self {

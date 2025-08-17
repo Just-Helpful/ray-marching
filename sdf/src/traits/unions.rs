@@ -10,7 +10,7 @@ pub trait SdfUnion<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfUnion<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct Union<T, U>(T, U);
+pub struct Union<T, U>(pub T, pub U);
 
 impl<const N: usize, T: Sdf<N>, U: Sdf<N>> Sdf<N> for Union<T, U> {
   #[inline]

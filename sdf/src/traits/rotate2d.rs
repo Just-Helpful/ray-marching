@@ -12,7 +12,7 @@ pub trait SdfRotate2D: Sdf<2> + Sized {
 impl<T: Sdf<2>> SdfRotate2D for T {}
 
 #[derive(Clone, Copy, PartialEq)]
-pub struct Rotate2D<T>(T, [[f64; 2]; 2]);
+pub struct Rotate2D<T>(pub T, [[f64; 2]; 2]);
 
 impl<T: Default> Default for Rotate2D<T> {
   fn default() -> Self {

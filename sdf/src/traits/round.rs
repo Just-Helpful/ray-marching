@@ -10,7 +10,7 @@ pub trait SdfRound<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfRound<N> for T {}
 
 #[derive(Clone, Copy, PartialEq)]
-pub struct Round<const N: usize, T>(T, f64);
+pub struct Round<const N: usize, T>(pub T, pub f64);
 
 impl<const N: usize, T: Default> Default for Round<N, T> {
   fn default() -> Self {

@@ -130,7 +130,6 @@ pub trait SdfGrad<const N: usize>: Sdf<N> {
 
 impl<const N: usize, F: Fn([f64; N]) -> f64 + Send + Sync> SdfGrad<N> for F {}
 
-/// Marker trait for complete Sdf implementations
 pub trait SdfFull<const N: usize>: SdfInfo<N> + SdfGrad<N> {}
 
 impl<const N: usize, S: Sdf<N> + SdfInfo<N> + SdfGrad<N>> SdfFull<N> for S {}

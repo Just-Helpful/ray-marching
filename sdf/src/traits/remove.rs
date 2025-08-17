@@ -10,7 +10,7 @@ pub trait SdfRemove<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfRemove<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct Remove<T, U>(T, U);
+pub struct Remove<T, U>(pub T, pub U);
 
 impl<const N: usize, T: Sdf<N>, U: Sdf<N>> Sdf<N> for Remove<T, U> {
   #[inline]

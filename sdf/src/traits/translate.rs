@@ -10,11 +10,11 @@ pub trait SdfTranslate<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfTranslate<N> for T {}
 
 #[derive(Clone, Copy, PartialEq)]
-pub struct Translate<const N: usize, T>(T, Vector<N>);
+pub struct Translate<const N: usize, T>(pub T, pub Vector<N>);
 
 impl<const N: usize, T: Default> Default for Translate<N, T> {
   fn default() -> Self {
-    Self(T::default(), Vector::zeros())
+    Self(T::default(), Vector([0.0; N]))
   }
 }
 

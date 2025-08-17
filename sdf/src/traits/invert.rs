@@ -10,7 +10,7 @@ pub trait SdfInvert<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfInvert<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct Invert<T>(T);
+pub struct Invert<T>(pub T);
 
 impl<const N: usize, T: Sdf<N>> Sdf<N> for Invert<T> {
   #[inline]
