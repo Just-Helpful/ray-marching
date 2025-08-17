@@ -73,8 +73,9 @@ impl<const N: usize, T: SdfGrad<N>, U: SdfGrad<N>> SdfGrad<N> for SmoothUnion<T,
   ///
   /// ```ignore
   /// k = self.2;
+  /// v0 = self.0.call(pos);
   ///
-  /// d = 0.5 + 0.5, (v1 - v0) / k;
+  /// d = 0.5 + 0.5 * (v1 - v0) / k;
   /// f = clamp(d, 0, 1);
   /// r = lerp(v1, v0, f) - k * f * (1 - f);
   /// ```
@@ -83,11 +84,13 @@ impl<const N: usize, T: SdfGrad<N>, U: SdfGrad<N>> SdfGrad<N> for SmoothUnion<T,
   ///
   /// ```ignore
   /// k = self.2;
+  /// (v0, D(v0)) = self.0.call_grad(pos);
+  /// (v1, D(v1)) = self.0.call_grad(pos);
   /// within(x, s, e) = f64::from((s..=e).contains(x));
   ///
-  /// D(d) = (D(v1) - D(v0)) / (2 * k);
+  /// D(d) = 0.5 * (D(v1) - D(v0)) / k;
   /// D(f) = within(d, 0, 1) * D(d)
-  /// D(r) = D(f) * (v1 + v0 - k) + lerp(D(v1), D(v0), f);
+  /// D(r) = lerp(D(v1), D(v0), f) + D(f) * (v1 + v0 - k);
   /// ```
   ///
   /// which we return alongside the original value, allowing us to re-use code.
