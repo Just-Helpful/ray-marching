@@ -10,7 +10,7 @@ pub trait SdfIntersect<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfIntersect<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct Intersect<T, U>(T, U);
+pub struct Intersect<T, U>(pub T, pub U);
 
 impl<const N: usize, T: Sdf<N>, U: Sdf<N>> Sdf<N> for Intersect<T, U> {
   #[inline]
