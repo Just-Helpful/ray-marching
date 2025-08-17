@@ -19,11 +19,12 @@ impl<const N: usize> Default for Cube<N> {
 impl<const N: usize> Sdf<N> for Cube<N> {
   #[inline]
   fn call(&self, pos: Vector<N>) -> f64 {
-    let mut result = f64::MIN;
-    for v in self.0.iter().map(|mid| mid.call(pos)) {
-      result = result.max(v)
-    }
-    result
+    self
+      .0
+      .iter()
+      .map(|mid| mid.call(pos))
+      .reduce(f64::max)
+      .unwrap_or(f64::MIN)
   }
 
   #[inline]
