@@ -11,7 +11,7 @@ pub trait SdfWithInfo<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfWithInfo<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct WithInfo<T, I>(T, I);
+pub struct WithInfo<T, I>(pub T, pub I);
 
 impl<const N: usize, I, T: Sdf<N>> Sdf<N> for WithInfo<T, I> {
   #[inline]
@@ -54,7 +54,7 @@ pub trait SdfWithDefault<const N: usize>: Sdf<N> + Sized {
 impl<const N: usize, T: Sdf<N>> SdfWithDefault<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct WithDefault<T, I>(T, PhantomData<I>);
+pub struct WithDefault<T, I>(pub T, PhantomData<I>);
 
 impl<const N: usize, I, T: Sdf<N>> Sdf<N> for WithDefault<T, I> {
   #[inline]
