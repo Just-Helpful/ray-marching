@@ -1,3 +1,5 @@
+use std::f64::consts::PI;
+
 use super::{screens::ScreenInfo, CameraPlane, Ray, RaySource};
 use marchrs_vectors::{GridIter, Vector};
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
@@ -7,6 +9,16 @@ pub struct PerspectiveCamera3D {
   pub plane: CameraPlane<3>,
   pub upwards: Vector<3>,
   pub fov: f64,
+}
+
+impl Default for PerspectiveCamera3D {
+  fn default() -> Self {
+    Self {
+      plane: CameraPlane::new([-1.0, 0.0, 0.0], [1.0, 0.0, 0.0]),
+      upwards: Vector([0.0, 0.0, 1.0]),
+      fov: PI / 8.0,
+    }
+  }
 }
 
 impl PerspectiveCamera3D {
