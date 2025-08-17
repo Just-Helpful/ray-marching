@@ -12,6 +12,11 @@ impl<const N: usize> Sdf<N> for Sphere<N> {
   fn call(&self, pos: Vector<N>) -> f64 {
     pos.mag() - 0.5
   }
+
+  #[inline]
+  fn hits(&self, pos: Vector<N>) -> bool {
+    pos.mag2() <= 0.25
+  }
 }
 
 impl<const N: usize> SdfNoInfo<N> for Sphere<N> {}
