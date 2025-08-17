@@ -1,4 +1,4 @@
-use super::{Sdf, SdfInfo};
+use super::{Sdf, SdfGrad, SdfInfo};
 use marchrs_vectors::Vector;
 
 pub trait SdfUnion<const N: usize>: Sdf<N> + Sized {
@@ -35,6 +35,19 @@ impl<const N: usize, T: SdfInfo<N>, U: SdfInfo<N, Info = T::Info>> SdfInfo<N> fo
       (value0, info0)
     } else {
       (value1, info1)
+    }
+  }
+}
+
+impl<const N: usize, T: SdfGrad<N>, U: SdfGrad<N>> SdfGrad<N> for Union<T, U> {
+  #[inline]
+  fn call_grad(&self, pos: Vector<N>) -> (f64, Vector<N>) {
+    let (value0, grad0) = self.0.call_grad(pos);
+    let (value1, grad1) = self.1.call_grad(pos);
+    if value0 <= value1 {
+      (value0, grad0)
+    } else {
+      (value1, grad1)
     }
   }
 }
