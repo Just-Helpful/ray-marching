@@ -13,17 +13,17 @@ pub trait SdfSmoothUnion<const N: usize>: Sdf<N> + Sized {
   /// 1. Rigid: when objects are far enough apart, no blend is performed.
   /// 2. Conservative: never over-estimates the distance to a surface.
   /// 3. Cheap to compute.
-  fn smooth_or<S: Sdf<N>>(self, other: S, factor: f64) -> QuadraticUnion<Self, S> {
-    QuadraticUnion(self, other, factor)
+  fn smooth_or<S: Sdf<N>>(self, other: S, factor: f64) -> SmoothUnion<Self, S> {
+    SmoothUnion(self, other, factor)
   }
 }
 
 impl<const N: usize, T: Sdf<N>> SdfSmoothUnion<N> for T {}
 
 #[derive(Clone, Copy, Default, PartialEq)]
-pub struct QuadraticUnion<T, U>(T, U, f64);
+pub struct SmoothUnion<T, U>(pub T, pub U, pub f64);
 
-impl<const N: usize, T: Sdf<N>, U: Sdf<N>> Sdf<N> for QuadraticUnion<T, U> {
+impl<const N: usize, T: Sdf<N>, U: Sdf<N>> Sdf<N> for SmoothUnion<T, U> {
   #[inline]
   fn call(&self, pos: Vector<N>) -> f64 {
     // the modern implementation of quadratic blending,
@@ -49,7 +49,7 @@ impl<const N: usize, T: Sdf<N>, U: Sdf<N>> Sdf<N> for QuadraticUnion<T, U> {
   }
 }
 
-impl<const N: usize, T, U> SdfInfo<N> for QuadraticUnion<T, U>
+impl<const N: usize, T, U> SdfInfo<N> for SmoothUnion<T, U>
 where
   T: SdfInfo<N>,
   U: SdfInfo<N, Info = T::Info>,
@@ -68,7 +68,7 @@ where
   }
 }
 
-impl<const N: usize, T: SdfGrad<N>, U: SdfGrad<N>> SdfGrad<N> for QuadraticUnion<T, U> {
+impl<const N: usize, T: SdfGrad<N>, U: SdfGrad<N>> SdfGrad<N> for SmoothUnion<T, U> {
   /// Derived from the `call` definition:
   ///
   /// ```ignore
