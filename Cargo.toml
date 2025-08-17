@@ -42,4 +42,4 @@ marchrs_sdf = { version = "0.1.0", path = "sdf" }
 marchrs_vectors = { version = "0.1.0", path = "vectors" }
 
 [[example]]
-name = "basic"
+name = "perf"
