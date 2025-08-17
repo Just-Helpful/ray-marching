@@ -12,10 +12,7 @@ use marchrs_iterators::MultiRangeIter;
 use marchrs_rays::{
   CameraPlane, PerspectiveCamera3D, RayMarcher, RaySource, ScreenInfo, SphereMarcher,
 };
-use marchrs_sdf::{
-  items::Sphere,
-  traits::{DynModel, SdfDynWrap, SdfScale, SdfWithInfo},
-};
+use marchrs_sdf::{items::*, traits::*};
 use marchrs_vectors::Vector;
 
 #[derive(Clone, Copy)]
@@ -57,16 +54,7 @@ fn get_marcher() -> impl RayMarcher<3> {
   }
 }
 
-fn print_screen<I: Display>(screen: Vec<Vec<I>>) {
-  for row in screen {
-    for item in row {
-      print!("{item}")
-    }
-    println!();
-  }
-}
-
-fn main() {
+fn render() -> Vec<Vec<Colour>> {
   let screen_info = ScreenInfo::new([0.3, 0.2], [150, 100]);
   let model = get_model();
   let camera = get_camera();
@@ -74,14 +62,20 @@ fn main() {
 
   let rendered: Vec<_> = camera
     .rays(&screen_info)
-    .map(|ray| marcher.call(&model, ray))
+    .map(|ray| marcher.march(&model, ray))
     .collect();
 
   let mut screen = vec![vec![BLACK; screen_info.res[0]]; screen_info.res[1]];
   for ([i, j], opt_colour) in MultiRangeIter::from(screen_info.res).zip(rendered) {
-    let Ok(colour) = opt_colour else { continue };
-    screen[j][i] = colour
+    let Ok(hit_pos) = opt_colour else { continue };
+    screen[j][i] = model.info(hit_pos)
   }
 
-  print_screen(screen)
+  screen
+}
+
+pub fn main() {
+  for _ in 0..500 {
+    render();
+  }
 }
