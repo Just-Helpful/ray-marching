@@ -17,13 +17,13 @@ impl<const N: usize> Default for Cuboid<N> {
 impl<const N: usize> Sdf<N> for Cuboid<N> {
   #[inline]
   fn call(&self, pos: Vector<N>) -> f64 {
-    let offset = pos.abs() - self.0 / 2.0;
+    let offset = pos.abs() - self.0 * 0.5;
     offset.el_max(0.0).mag() + offset.max().min(0.0)
   }
 
   #[inline]
   fn hits(&self, pos: Vector<N>) -> bool {
-    self.0.iter().zip(pos).all(|(dim, x)| x <= dim / 2.0)
+    self.0.iter().zip(pos).all(|(dim, x)| x <= dim * 0.5)
   }
 }
 
