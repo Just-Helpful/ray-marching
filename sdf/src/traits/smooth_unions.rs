@@ -3,7 +3,7 @@ use crate::interpolate::Interpolate;
 use super::{Sdf, SdfGrad, SdfInfo};
 use marchrs_vectors::Vector;
 
-/// Smooth unions for `SDF` items.<br>
+/// Smooth unions for `SDF` items.\
 /// heavily inspired by [this article](https://iquilezles.org/articles/smin/)
 pub trait SdfSmoothUnion<const N: usize>: Sdf<N> + Sized {
   /// Creates a smooth union between to `SDF`s.

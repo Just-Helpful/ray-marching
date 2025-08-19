@@ -30,7 +30,7 @@ impl PerspectiveCamera3D {
     }
   }
 
-  /// Calculates the distance the camera position<br>.
+  /// Calculates the distance the camera position.\
   /// We choose this such that the FOV angle is over the largest dimension.
   fn camera_pos(&self, screen: &ScreenInfo<2>) -> Vector<3> {
     let max_dim = screen.dims.max();

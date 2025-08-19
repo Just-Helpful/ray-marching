@@ -2,7 +2,7 @@ use marchrs_vectors::Vector;
 
 use super::{Sdf, SdfGrad, SdfInfo};
 
-/// 3D rotation around an axis.<br>
+/// 3D rotation around an axis.\
 /// we just use the matrix transformation from [wikipedia](http://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_and_angle)
 /// to get the inverse rotation matrix to be applied to coordinates.
 pub trait SdfRotate3D: Sdf<3> + Sized {

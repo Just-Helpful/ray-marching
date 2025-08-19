@@ -72,7 +72,7 @@ impl<const N: usize> Vector<N> {
     Self(self.0.map(f64::abs))
   }
 
-  /// Magnitude squared of a vector.<br>
+  /// Magnitude squared of a vector.\
   /// Using this method allows us to avoid a `sqrt`, which are among the
   /// slowest CPU operations ([source](https://stackoverflow.com/a/12304868/14054238))
   #[inline]

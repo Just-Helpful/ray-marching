@@ -6,11 +6,11 @@ use marchrs_vectors::Vector;
 pub trait SdfDynWrap<const N: usize>: SdfFull<N> + Sized + 'static {
   /// Wraps the model in an `Rc<dyn ...>` to make typing easier.
   ///
-  /// Effectively, this erases all the compound types from a SDF model,<br>
-  /// turning `WithInfo<Scale<Sphere<3>>, bool>` into `DynWrap<3, bool>`,<br>
+  /// Effectively, this erases all the compound types from a SDF model,\
+  /// turning `WithInfo<Scale<Sphere<3>>, bool>` into `DynWrap<3, bool>`,\
   /// which is significantly easier to pass around.
   ///
-  /// This also sort of has the benefit of allowing `PartialEq` on things<br>
+  /// This also sort of has the benefit of allowing `PartialEq` on things\
   /// that don't typically support it, i.e. closures.
   fn wrap(self) -> DynModel<N, Self::Info> {
     DynModel(Rc::new(self))
